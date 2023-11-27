@@ -9,6 +9,15 @@ git clone https://github.com/quo0001/Profile-Converter.git
 cd Profile-Converter
 ```
 
+## Usage
+
+Run the main.go file and fill in the prompt with your desired options. The converted output will be copied to your clipboard once complete.
+
+```
+cd Profile-Converter
+go run cmd/Profile-Converter/main.go
+```
+
 ## Supported Bots
 
 - [Stellar](https://stellaraio.com/)

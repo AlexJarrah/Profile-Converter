@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/atotto/clipboard"
 	"github.com/quo0001/Profile-Converter/internal"
 	"github.com/quo0001/Profile-Converter/internal/cli"
 	"github.com/quo0001/Profile-Converter/internal/profiles/shikari"
@@ -51,4 +52,5 @@ func main() {
 	}
 
 	fmt.Println(output)
+	clipboard.WriteAll(output)
 }

@@ -10,49 +10,45 @@ import (
 	"github.com/quo0001/Profile-Converter/internal/profiles/stellar"
 )
 
+func parseInput(path string, inputFormat internal.Format) (profiles []internal.Profile, err error) {
+	switch inputFormat {
+	case internal.FormatStellar:
+		return stellar.Parse(path)
+	case internal.FormatShikari:
+		return shikari.Parse(path)
+	default:
+		return nil, fmt.Errorf("invalid input format")
+	}
+}
+
+func convert(profiles []internal.Profile, outputFormat internal.Format) (any, string, error) {
+	switch outputFormat {
+	case internal.FormatStellar:
+		return stellar.Convert(profiles)
+	case internal.FormatShikari:
+		return shikari.Convert(profiles)
+	default:
+		return nil, "", fmt.Errorf("invalid output format")
+	}
+}
+
 func main() {
 	path, inputFormat, outputFormat := cli.Prompt()
-
-	fmt.Println(path)
-	fmt.Println(inputFormat)
-	fmt.Println(outputFormat)
 
 	var profiles []internal.Profile
 	var err error
 
-	switch inputFormat {
-	case internal.FormatStellar:
-		profiles, err = stellar.Parse(path)
-
-	case internal.FormatShikari:
-		profiles, err = shikari.Parse(path)
-	}
-
+	profiles, err = parseInput(path, inputFormat)
 	if err != nil {
 		log.Println("error parsing input:", err)
 		return
 	}
 
-	switch outputFormat {
-	case internal.FormatStellar:
-		profiles, output, err := stellar.Convert(profiles)
-		if err != nil {
-			log.Println("error converting to Stellar:", err)
-			return
-		}
-
-		fmt.Println(profiles)
-		fmt.Println(output)
-
-	case internal.FormatShikari:
-		profiles, output, err := shikari.Convert(profiles)
-		if err != nil {
-			log.Println("error converting to Shikari:", err)
-			return
-		}
-
-		fmt.Println(profiles)
-		fmt.Println(output)
+	_, output, err := convert(profiles, outputFormat)
+	if err != nil {
+		log.Println("error converting:", err)
+		return
 	}
 
+	fmt.Println(output)
 }

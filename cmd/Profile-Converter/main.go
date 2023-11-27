@@ -12,8 +12,8 @@ import (
 func main() {
 	// path, inputFormat, outputFormat := prompt.Prompt()
 	path := "formats/profiles/stellar.json"
-	inputFormat := internal.FormatStellar
-	outputFormat := internal.FormatShikari
+	inputFormat := internal.FormatShikari
+	outputFormat := internal.FormatStellar
 
 	var profiles []internal.Profile
 	var err error
@@ -27,17 +27,15 @@ func main() {
 	}
 
 	if err != nil {
-		log.Println("error:", err)
+		log.Println("error parsing input:", err)
 		return
 	}
-
-	fmt.Println(profiles[0].Billing.Address)
 
 	switch outputFormat {
 	case internal.FormatStellar:
 		profiles, output, err := stellar.Convert(profiles)
 		if err != nil {
-			log.Println("error:", err)
+			log.Println("error converting to Stellar:", err)
 			return
 		}
 
@@ -47,7 +45,7 @@ func main() {
 	case internal.FormatShikari:
 		profiles, output, err := shikari.Convert(profiles)
 		if err != nil {
-			log.Println("error:", err)
+			log.Println("error converting to Shikari:", err)
 			return
 		}
 

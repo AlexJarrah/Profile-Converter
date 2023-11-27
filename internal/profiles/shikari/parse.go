@@ -2,61 +2,90 @@ package shikari
 
 import (
 	"encoding/csv"
+	"fmt"
 	"os"
+	"strconv"
+
+	"github.com/quo0001/Profile-Converter/internal"
 )
 
-func Parse(path string) (Profiles, error) {
-	// Open the CSV file
-	file, err := os.Open(path)
+// Parses a file's contents into the universal struct format
+func Parse(path string) ([]internal.Profile, error) {
+	// Reads the specified file path
+	f, err := os.Open(path)
 	if err != nil {
-		return Profiles{}, err
+		return nil, err
 	}
-	defer file.Close()
+	defer f.Close()
 
-	// Read the CSV file
-	reader := csv.NewReader(file)
+	// Unmarshals the CSV file
+	reader := csv.NewReader(f)
 	records, err := reader.ReadAll()
 	if err != nil {
-		return Profiles{}, err
+		return nil, err
 	}
 
-	// Create a Profiles instance to hold the parsed data
-	var profiles Profiles
+	// Initialize the result variable
+	var result []internal.Profile
 
-	// Iterate through the records and convert them to Profile structs
-	for i, record := range records {
+	// Iterates through each profile and appends it to the result
+	for i, r := range records {
+		// Ignore the first record (header)
 		if i == 0 {
 			continue
 		}
-		profile := Profile{
-			ProfileName:      record[0],
-			FirstName:        record[1],
-			LastName:         record[2],
-			Email:            record[3],
-			PhoneNum:         record[4],
-			CCNumber:         record[5],
-			CCExpMonth:       record[6],
-			CCExpYear:        record[7],
-			CCCVV:            record[8],
-			ShippingStreet:   record[9],
-			ShippingStreet2:  record[10],
-			ShippingCity:     record[11],
-			ShippingState:    record[12],
-			ShippingZipCode:  record[13],
-			ShippingCountry:  record[14],
-			BillingFirstName: record[15],
-			BillingLastName:  record[16],
-			BillingStreet:    record[17],
-			BillingStreet2:   record[18],
-			BillingCity:      record[19],
-			BillingState:     record[20],
-			BillingZipCode:   record[21],
-			BillingCountry:   record[22],
+
+		// Parses strings into integers
+		shippingZip, _ := strconv.Atoi(r[13])
+		billingZip, _ := strconv.Atoi(r[21])
+		num, _ := strconv.Atoi(r[5])
+		month, _ := strconv.Atoi(r[6])
+		year, _ := strconv.Atoi(r[7])
+		cvv, _ := strconv.Atoi(r[8])
+
+		profile := internal.Profile{
+			ProfileName: r[0],
+			Email:       r[3],
+			Phone:       r[4],
+			Shipping: internal.Address{
+				FirstName: r[1],
+				LastName:  r[2],
+				Country:   r[14],
+				Address:   r[9],
+				Address2:  r[10],
+				State:     r[12],
+				City:      r[11],
+				Zipcode:   uint32(shippingZip),
+			},
+			BillingAsShipping: false,
+			Billing: internal.Address{
+				FirstName: r[15],
+				LastName:  r[16],
+				Country:   r[22],
+				Address:   r[17],
+				Address2:  r[18],
+				State:     r[20],
+				City:      r[19],
+				Zipcode:   uint32(billingZip),
+			},
+			Payment: internal.Payment{
+				Name:   fmt.Sprintf("%s %s", r[1], r[2]),
+				Type:   internal.GetCardType(uint64(num)),
+				Number: uint64(num),
+				Month:  uint8(month),
+				Year:   uint16(year),
+				CVV:    uint16(cvv),
+			},
 		}
 
-		// Append the Profile instance to the Profiles slice
-		profiles.Profiles = append(profiles.Profiles, profile)
+		// Check if the billing address is undefined or the same as the shipping
+		if profile.Billing == (internal.Address{}) || profile.Billing == profile.Shipping {
+			profile.BillingAsShipping = true
+		}
+
+		// Appends the profile to the result
+		result = append(result, profile)
 	}
 
-	return profiles, nil
+	return result, nil
 }

@@ -1,9 +1,5 @@
 package shikari
 
-type Profiles struct {
-	Profiles []Profile
-}
-
 type Profile struct {
 	ProfileName      string `csv:"profile_name"`
 	FirstName        string `csv:"first_name"`

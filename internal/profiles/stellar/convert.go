@@ -1,16 +1,17 @@
 package stellar
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/quo0001/Profile-Converter/internal"
 )
 
-func Convert(profiles []internal.Profile) []Profile {
-	resp := []Profile{}
-
+// Converts the universal struct into the Stellar struct.
+// Returns the result as a struct and as JSON.
+func Convert(profiles []internal.Profile) (res []Profile, resJSON string, err error) {
 	for _, p := range profiles {
-		resp = append(resp, Profile{
+		profile := Profile{
 			ProfileName: p.ProfileName,
 			Email:       p.Email,
 			Phone:       p.Phone,
@@ -43,8 +44,11 @@ func Convert(profiles []internal.Profile) []Profile {
 				CardYear:   fmt.Sprint(p.Payment.Year),
 				CardCvv:    fmt.Sprint(p.Payment.CVV),
 			},
-		})
+		}
+
+		res = append(res, profile)
 	}
 
-	return resp
+	resJSONBytes, err := json.Marshal(res)
+	return res, string(resJSONBytes), err
 }

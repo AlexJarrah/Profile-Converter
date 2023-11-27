@@ -8,20 +8,26 @@ import (
 	"github.com/quo0001/Profile-Converter/internal"
 )
 
+// Parses a file's contents into the universal struct format
 func Parse(path string) ([]internal.Profile, error) {
+	// Reads the specified file path
 	f, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 
+	// Unmarshals the JSON file
 	var profiles []Profile
 	if err = json.Unmarshal(f, &profiles); err != nil {
 		return nil, err
 	}
 
-	resp := []internal.Profile{}
+	// Initialize the result variable
+	var result []internal.Profile
 
+	// Iterates through each profile and appends it to the result
 	for _, p := range profiles {
+		// Parses strings into integers
 		zip, _ := strconv.Atoi(p.Shipping.Zipcode)
 		num, _ := strconv.Atoi(p.Payment.CardNumber)
 		month, _ := strconv.Atoi(p.Payment.CardMonth)
@@ -64,8 +70,9 @@ func Parse(path string) ([]internal.Profile, error) {
 			},
 		}
 
-		resp = append(resp, profile)
+		// Appends the profile to the result
+		result = append(result, profile)
 	}
 
-	return resp, nil
+	return result, nil
 }

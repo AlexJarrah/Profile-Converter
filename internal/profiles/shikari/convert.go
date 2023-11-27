@@ -1,71 +1,78 @@
 package shikari
 
 import (
-	"strconv"
+	"fmt"
 
 	"github.com/quo0001/Profile-Converter/internal"
 )
 
-func (profiles Profiles) Convert() []internal.Profile {
-	var result []internal.Profile
+// CSV header
+const header = "profile_name,first_name,last_name,email,phone_num,cc_number,cc_exp_month,cc_exp_year,cc_cvv,shipping_street,shipping_street_2,shipping_city,shipping_state,shipping_zip_code,shipping_country,billing_first_name,billing_last_name,billing_street,billing_street_2,billing_city,billing_state,billing_zip_code,billing_country"
 
-	for _, p := range profiles.Profiles {
-		shipzip, _ := strconv.Atoi(p.ShippingZipCode)
-		bilsip, _ := strconv.Atoi(p.BillingZipCode)
-		num, month, year, cvv := atoi(p.CCNumber, p.CCExpMonth, p.CCExpYear, p.CCCVV)
-
-		billing := internal.Address{
-			FirstName: p.BillingFirstName,
-			LastName:  p.BillingLastName,
-			Country:   p.BillingCountry,
-			Address:   p.BillingStreet,
-			Address2:  p.BillingStreet2,
-			State:     p.BillingState,
-			City:      p.BillingCity,
-			Zipcode:   uint32(bilsip),
+// Converts the universal struct into the Stellar struct.
+// Returns the result as a struct and as CSV.
+func Convert(profiles []internal.Profile) (res []Profile, resCSV string, err error) {
+	for _, p := range profiles {
+		profile := Profile{
+			ProfileName:     p.ProfileName,
+			FirstName:       p.Shipping.FirstName,
+			LastName:        p.Shipping.LastName,
+			Email:           p.Email,
+			PhoneNum:        p.Phone,
+			CCNumber:        fmt.Sprint(p.Payment.Number),
+			CCExpMonth:      fmt.Sprint(p.Payment.Month),
+			CCExpYear:       fmt.Sprint(p.Payment.Year),
+			CCCVV:           fmt.Sprint(p.Payment.CVV),
+			ShippingStreet:  p.Shipping.Address,
+			ShippingStreet2: p.Shipping.Address2,
+			ShippingCity:    p.Shipping.City,
+			ShippingState:   p.Shipping.State,
+			ShippingZipCode: fmt.Sprint(p.Shipping.Zipcode),
+			ShippingCountry: p.Shipping.Country,
 		}
 
-		profile := internal.Profile{
-			ProfileName: p.ProfileName,
-			Email:       p.Email,
-			Phone:       p.PhoneNum,
-			Shipping: internal.Address{
-				FirstName: p.FirstName,
-				LastName:  p.LastName,
-				Country:   p.ShippingCountry,
-				Address:   p.ShippingStreet,
-				Address2:  p.ShippingStreet2,
-				State:     p.ShippingState,
-				City:      p.ShippingCity,
-				Zipcode:   uint32(shipzip),
-			},
-			BillingAsShipping: p.BillingStreet == "",
-			Billing:           billing,
-			Payment: internal.Payment{
-				Name:   p.CCNumber,
-				Number: uint64(num),
-				Month:  uint8(month),
-				Year:   uint16(year),
-				CVV:    uint16(cvv),
-			},
+		if !p.BillingAsShipping {
+			profile.BillingFirstName = p.Billing.FirstName
+			profile.BillingLastName = p.Billing.LastName
+			profile.BillingStreet = p.Billing.Address
+			profile.BillingStreet2 = p.Billing.Address2
+			profile.BillingCity = p.Billing.City
+			profile.BillingState = p.Billing.State
+			profile.BillingZipCode = fmt.Sprint(p.Billing.Zipcode)
+			profile.BillingCountry = p.Billing.Country
 		}
 
-		if profile.BillingAsShipping {
-			profile.Billing = profile.Shipping
-		}
-
-		result = append(result, profile)
+		res = append(res, profile)
 	}
 
-	return result
-}
-
-func atoi(strs ...string) (int, int, int, int) {
-	var result [4]int
-
-	for i, str := range strs {
-		result[i], _ = strconv.Atoi(str)
+	// Creates the CSV value
+	resCSV = header + "\n"
+	for _, p := range res {
+		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+			p.ProfileName,
+			p.FirstName,
+			p.LastName,
+			p.Email,
+			p.PhoneNum,
+			p.CCNumber,
+			p.CCExpMonth,
+			p.CCExpYear,
+			p.CCCVV,
+			p.ShippingStreet,
+			p.ShippingStreet2,
+			p.ShippingCity,
+			p.ShippingState,
+			p.ShippingZipCode,
+			p.ShippingCountry,
+			p.BillingFirstName,
+			p.BillingLastName,
+			p.BillingStreet,
+			p.BillingStreet2,
+			p.BillingCity,
+			p.BillingState,
+			p.BillingZipCode,
+			p.BillingCountry)
 	}
 
-	return result[0], result[1], result[2], result[3]
+	return res, resCSV, err
 }

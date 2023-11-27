@@ -5,15 +5,17 @@ import (
 	"log"
 
 	"github.com/quo0001/Profile-Converter/internal"
+	"github.com/quo0001/Profile-Converter/internal/cli"
 	"github.com/quo0001/Profile-Converter/internal/profiles/shikari"
 	"github.com/quo0001/Profile-Converter/internal/profiles/stellar"
 )
 
 func main() {
-	// path, inputFormat, outputFormat := prompt.Prompt()
-	path := "formats/profiles/stellar.json"
-	inputFormat := internal.FormatShikari
-	outputFormat := internal.FormatStellar
+	path, inputFormat, outputFormat := cli.Prompt()
+
+	fmt.Println(path)
+	fmt.Println(inputFormat)
+	fmt.Println(outputFormat)
 
 	var profiles []internal.Profile
 	var err error

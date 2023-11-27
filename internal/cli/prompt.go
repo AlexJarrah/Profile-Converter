@@ -7,7 +7,6 @@ import (
 
 func Prompt() (filePath string, inputFormat internal.Format, outputFormat internal.Format) {
 	app := tview.NewApplication()
-
 	setStyles()
 
 	options := []string{"Stellar", "Shikari"}

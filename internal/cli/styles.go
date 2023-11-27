@@ -9,7 +9,6 @@ var (
 	MainColor          = tcell.NewRGBColor(26, 26, 26)
 	AccentColor        = tcell.NewRGBColor(90, 80, 225)
 	BackgroundColor    = tcell.NewRGBColor(10, 10, 10)
-	TopbarColor        = tcell.NewRGBColor(15, 15, 15)
 	PrimaryTextColor   = tcell.NewRGBColor(250, 250, 250)
 	SecondaryTextColor = tcell.NewRGBColor(180, 180, 180)
 )

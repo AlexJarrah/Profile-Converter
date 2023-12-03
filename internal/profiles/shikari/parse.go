@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/quo0001/Profile-Converter/internal"
+	"github.com/AlexJarrah/Profile-Converter/internal"
 )
 
 // Parses a file's contents into the universal struct format

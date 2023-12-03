@@ -1,4 +1,4 @@
-module github.com/quo0001/Profile-Converter
+module github.com/AlexJarrah/Profile-Converter
 
 go 1.21.4
 

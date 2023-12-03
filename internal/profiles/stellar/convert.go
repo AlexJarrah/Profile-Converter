@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/quo0001/Profile-Converter/internal"
+	"github.com/AlexJarrah/Profile-Converter/internal"
 )
 
 // Converts the universal struct into the Stellar struct.

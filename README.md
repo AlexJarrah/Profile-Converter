@@ -5,7 +5,7 @@ A powerful tool designed to seamlessly convert your profiles across various chec
 ## Installation
 
 ```
-git clone https://github.com/quo0001/Profile-Converter.git
+git clone https://github.com/AlexJarrah/Profile-Converter.git
 cd Profile-Converter
 ```
 

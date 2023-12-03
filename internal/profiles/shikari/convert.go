@@ -3,7 +3,7 @@ package shikari
 import (
 	"fmt"
 
-	"github.com/quo0001/Profile-Converter/internal"
+	"github.com/AlexJarrah/Profile-Converter/internal"
 )
 
 // CSV header

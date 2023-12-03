@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/AlexJarrah/Profile-Converter/internal"
+	"github.com/AlexJarrah/Profile-Converter/internal/cli"
+	"github.com/AlexJarrah/Profile-Converter/internal/profiles/shikari"
+	"github.com/AlexJarrah/Profile-Converter/internal/profiles/stellar"
 	"github.com/atotto/clipboard"
-	"github.com/quo0001/Profile-Converter/internal"
-	"github.com/quo0001/Profile-Converter/internal/cli"
-	"github.com/quo0001/Profile-Converter/internal/profiles/shikari"
-	"github.com/quo0001/Profile-Converter/internal/profiles/stellar"
 )
 
 func parseInput(path string, inputFormat internal.Format) (profiles []internal.Profile, err error) {

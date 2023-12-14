@@ -48,31 +48,7 @@ func Convert(profiles []internal.Profile) (res []Profile, resCSV string, err err
 	// Creates the CSV value
 	resCSV = header + "\n"
 	for _, p := range res {
-		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
-			p.ProfileName,
-			p.FirstName,
-			p.LastName,
-			p.Email,
-			p.PhoneNum,
-			p.CCNumber,
-			p.CCExpMonth,
-			p.CCExpYear,
-			p.CCCVV,
-			p.ShippingStreet,
-			p.ShippingStreet2,
-			p.ShippingCity,
-			p.ShippingState,
-			p.ShippingZipCode,
-			p.ShippingCountry,
-			p.BillingFirstName,
-			p.BillingLastName,
-			p.BillingStreet,
-			p.BillingStreet2,
-			p.BillingCity,
-			p.BillingState,
-			p.BillingZipCode,
-			p.BillingCountry,
-		)
+		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", p.ProfileName, p.FirstName, p.LastName, p.Email, p.PhoneNum, p.CCNumber, p.CCExpMonth, p.CCExpYear, p.CCCVV, p.ShippingStreet, p.ShippingStreet2, p.ShippingCity, p.ShippingState, p.ShippingZipCode, p.ShippingCountry, p.BillingFirstName, p.BillingLastName, p.BillingStreet, p.BillingStreet2, p.BillingCity, p.BillingState, p.BillingZipCode, p.BillingCountry)
 	}
 
 	return res, resCSV, err

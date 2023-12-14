@@ -45,31 +45,7 @@ func Convert(profiles []internal.Profile) (res []Profile, resCSV string, err err
 	// Creates the CSV value
 	resCSV = header + "\n"
 	for _, p := range res {
-		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
-			p.Keyword,
-			p.Size,
-			p.FirstName,
-			p.LastName,
-			p.Email,
-			p.PhoneNumber,
-			p.Address1,
-			p.Address2,
-			p.State,
-			p.City,
-			p.Zip,
-			p.Country,
-			p.CCNumber,
-			p.Month,
-			p.Year,
-			p.CVC,
-			p.TaskQuantity,
-			p.RetryDelay,
-			p.MonitorDelay,
-			p.Site,
-			p.Mode,
-			p._2CaptchaKEY,
-			p.SHIPPINGRATE,
-		)
+		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", p.Keyword, p.Size, p.FirstName, p.LastName, p.Email, p.PhoneNumber, p.Address1, p.Address2, p.State, p.City, p.Zip, p.Country, p.CCNumber, p.Month, p.Year, p.CVC, p.TaskQuantity, p.RetryDelay, p.MonitorDelay, p.Site, p.Mode, p._2CaptchaKEY, p.SHIPPINGRATE)
 	}
 
 	return res, resCSV, err

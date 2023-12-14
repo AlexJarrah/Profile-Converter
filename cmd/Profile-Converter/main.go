@@ -8,6 +8,7 @@ import (
 	"github.com/AlexJarrah/Profile-Converter/internal/cli"
 	"github.com/AlexJarrah/Profile-Converter/internal/profiles/shikari"
 	"github.com/AlexJarrah/Profile-Converter/internal/profiles/stellar"
+	"github.com/AlexJarrah/Profile-Converter/internal/profiles/trickle"
 	"github.com/atotto/clipboard"
 )
 
@@ -17,6 +18,8 @@ func parseInput(path string, inputFormat internal.Format) (profiles []internal.P
 		return stellar.Parse(path)
 	case internal.FormatShikari:
 		return shikari.Parse(path)
+	case internal.FormatTrickle:
+		return trickle.Parse(path)
 	default:
 		return nil, fmt.Errorf("invalid input format")
 	}
@@ -28,6 +31,8 @@ func convert(profiles []internal.Profile, outputFormat internal.Format) (any, st
 		return stellar.Convert(profiles)
 	case internal.FormatShikari:
 		return shikari.Convert(profiles)
+	case internal.FormatTrickle:
+		return trickle.Convert(profiles)
 	default:
 		return nil, "", fmt.Errorf("invalid output format")
 	}

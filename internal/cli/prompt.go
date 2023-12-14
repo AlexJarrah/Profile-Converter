@@ -5,11 +5,11 @@ import (
 	"github.com/rivo/tview"
 )
 
+var options = []string{"Stellar", "Shikari", "Trickle"}
+
 func Prompt() (filePath string, inputFormat internal.Format, outputFormat internal.Format) {
 	app := tview.NewApplication()
 	setStyles()
-
-	options := []string{"Stellar", "Shikari"}
 
 	form := tview.NewForm().
 		AddInputField("File Path", "", 30, nil, func(text string) {

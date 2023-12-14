@@ -1,5 +1,9 @@
 package internal
 
+type ProfileGroup struct {
+	Name     string
+	Profiles []Profile
+}
 type Profile struct {
 	ProfileName       string  `json:"profileName"`
 	Email             string  `json:"email"`

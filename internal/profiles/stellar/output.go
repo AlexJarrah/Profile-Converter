@@ -42,7 +42,7 @@ func Convert(profiles []internal.Profile) (res []Profile, resJSON string, err er
 				CardNumber: fmt.Sprint(p.Payment.Number),
 				CardMonth:  fmt.Sprint(internal.FormatCardMonth(p.Payment.Month, true)),
 				CardYear:   fmt.Sprint(internal.FormatCardYear(p.Payment.Year, false)),
-				CardCvv:    fmt.Sprint(p.Payment.CVV),
+				CardCVV:    fmt.Sprint(p.Payment.CVV),
 			},
 		}
 

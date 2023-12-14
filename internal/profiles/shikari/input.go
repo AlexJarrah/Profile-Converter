@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/AlexJarrah/Profile-Converter/internal"
 )
@@ -35,14 +34,6 @@ func Parse(path string) ([]internal.Profile, error) {
 			continue
 		}
 
-		// Parses strings into integers
-		shippingZip, _ := strconv.Atoi(r[13])
-		billingZip, _ := strconv.Atoi(r[21])
-		num, _ := strconv.Atoi(r[5])
-		month, _ := strconv.Atoi(r[6])
-		year, _ := strconv.Atoi(r[7])
-		cvv, _ := strconv.Atoi(r[8])
-
 		profile := internal.Profile{
 			ProfileName: r[0],
 			Email:       r[3],
@@ -50,31 +41,31 @@ func Parse(path string) ([]internal.Profile, error) {
 			Shipping: internal.Address{
 				FirstName: r[1],
 				LastName:  r[2],
-				Country:   r[14],
+				Country:   internal.FormatCountry(r[14], true),
 				Address:   r[9],
 				Address2:  r[10],
-				State:     r[12],
+				State:     internal.FormatState(r[12], true),
 				City:      r[11],
-				Zipcode:   uint32(shippingZip),
+				Zipcode:   uint32(internal.ParseInt(r[13])),
 			},
 			BillingAsShipping: false,
 			Billing: internal.Address{
 				FirstName: r[15],
 				LastName:  r[16],
-				Country:   r[22],
+				Country:   internal.FormatCountry(r[22], true),
 				Address:   r[17],
 				Address2:  r[18],
-				State:     r[20],
+				State:     internal.FormatState(r[20], true),
 				City:      r[19],
-				Zipcode:   uint32(billingZip),
+				Zipcode:   uint32(internal.ParseInt(r[21])),
 			},
 			Payment: internal.Payment{
 				Name:   fmt.Sprintf("%s %s", r[1], r[2]),
-				Type:   internal.GetCardType(uint64(num)),
-				Number: uint64(num),
-				Month:  uint8(month),
-				Year:   uint16(year),
-				CVV:    uint16(cvv),
+				Type:   internal.GetCardType(r[5]),
+				Number: uint64(internal.ParseInt(r[5])),
+				Month:  uint8(internal.ParseInt(internal.FormatCardMonth(r[6], true))),
+				Year:   internal.FormatCardYear(r[7], true),
+				CVV:    uint16(internal.ParseInt(r[8])),
 			},
 		}
 

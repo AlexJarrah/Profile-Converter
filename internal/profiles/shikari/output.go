@@ -20,15 +20,15 @@ func Convert(profiles []internal.Profile) (res []Profile, resCSV string, err err
 			Email:           p.Email,
 			PhoneNum:        p.Phone,
 			CCNumber:        fmt.Sprint(p.Payment.Number),
-			CCExpMonth:      fmt.Sprint(p.Payment.Month),
-			CCExpYear:       fmt.Sprint(p.Payment.Year),
+			CCExpMonth:      internal.FormatCardMonth(p.Payment.Month, false),
+			CCExpYear:       fmt.Sprint(internal.FormatCardYear(p.Payment.Year, true)),
 			CCCVV:           fmt.Sprint(p.Payment.CVV),
 			ShippingStreet:  p.Shipping.Address,
 			ShippingStreet2: p.Shipping.Address2,
 			ShippingCity:    p.Shipping.City,
-			ShippingState:   p.Shipping.State,
+			ShippingState:   internal.FormatState(p.Shipping.State, false),
 			ShippingZipCode: fmt.Sprint(p.Shipping.Zipcode),
-			ShippingCountry: p.Shipping.Country,
+			ShippingCountry: internal.FormatCountry(p.Shipping.Country, false),
 		}
 
 		if !p.BillingAsShipping {
@@ -37,9 +37,9 @@ func Convert(profiles []internal.Profile) (res []Profile, resCSV string, err err
 			profile.BillingStreet = p.Billing.Address
 			profile.BillingStreet2 = p.Billing.Address2
 			profile.BillingCity = p.Billing.City
-			profile.BillingState = p.Billing.State
+			profile.BillingState = internal.FormatState(p.Billing.State, false)
 			profile.BillingZipCode = fmt.Sprint(p.Billing.Zipcode)
-			profile.BillingCountry = p.Billing.Country
+			profile.BillingCountry = internal.FormatCountry(p.Billing.Country, false)
 		}
 
 		res = append(res, profile)

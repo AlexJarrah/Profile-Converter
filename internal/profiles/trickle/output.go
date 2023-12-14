@@ -45,9 +45,10 @@ func Convert(profiles []internal.Profile) (res []Profile, resCSV string, err err
 	// Creates the CSV value
 	resCSV = header + "\n"
 	for _, p := range res {
-		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+		resCSV += fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
 			p.Keyword,
 			p.Size,
+			p.FirstName,
 			p.LastName,
 			p.Email,
 			p.PhoneNumber,

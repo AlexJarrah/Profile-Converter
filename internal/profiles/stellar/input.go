@@ -57,7 +57,7 @@ func Parse(path string) ([]internal.Profile, error) {
 				Number: uint64(internal.ParseInt(p.Payment.CardNumber)),
 				Month:  uint8(internal.ParseInt(internal.FormatCardMonth(p.Payment.CardMonth, true))),
 				Year:   internal.FormatCardYear(p.Payment.CardYear, true),
-				CVV:    uint16(internal.ParseInt(p.Payment.CardCvv)),
+				CVV:    uint16(internal.ParseInt(p.Payment.CardCVV)),
 			},
 		}
 

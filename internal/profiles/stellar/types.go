@@ -38,5 +38,5 @@ type Payment struct {
 	CardNumber string `json:"cardNumber"`
 	CardMonth  string `json:"cardMonth"`
 	CardYear   string `json:"cardYear"`
-	CardCvv    string `json:"cardCvv"`
+	CardCVV    string `json:"cardCvv"`
 }

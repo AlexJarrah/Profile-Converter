@@ -22,4 +22,5 @@ go run cmd/Profile-Converter/main.go
 
 - [Stellar](https://stellaraio.com/)
 - [Shikari](https://shikari.tech/)
+- [Trickle](https://trickle.bot)
 - & more to come

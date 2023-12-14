@@ -105,3 +105,8 @@ func FormatState(state string, full bool) string {
 
 	return state
 }
+
+func ParseInt(num string) int {
+	number, _ := strconv.Atoi(num)
+	return number
+}

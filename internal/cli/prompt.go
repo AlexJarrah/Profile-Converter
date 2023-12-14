@@ -5,7 +5,7 @@ import (
 	"github.com/rivo/tview"
 )
 
-var options = []string{"Stellar", "Shikari", "Trickle"}
+var options = []string{"AYCD", "Stellar", "Shikari", "Trickle"}
 
 func Prompt() (filePath string, inputFormat internal.Format, outputFormat internal.Format) {
 	app := tview.NewApplication()

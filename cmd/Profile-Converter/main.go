@@ -6,6 +6,7 @@ import (
 
 	"github.com/AlexJarrah/Profile-Converter/internal"
 	"github.com/AlexJarrah/Profile-Converter/internal/cli"
+	"github.com/AlexJarrah/Profile-Converter/internal/profiles/aycd"
 	"github.com/AlexJarrah/Profile-Converter/internal/profiles/shikari"
 	"github.com/AlexJarrah/Profile-Converter/internal/profiles/stellar"
 	"github.com/AlexJarrah/Profile-Converter/internal/profiles/trickle"
@@ -14,6 +15,8 @@ import (
 
 func parseInput(path string, inputFormat internal.Format) (profiles []internal.Profile, err error) {
 	switch inputFormat {
+	case internal.FormatAYCD:
+		return aycd.Parse(path)
 	case internal.FormatStellar:
 		return stellar.Parse(path)
 	case internal.FormatShikari:
@@ -27,6 +30,8 @@ func parseInput(path string, inputFormat internal.Format) (profiles []internal.P
 
 func convert(profiles []internal.Profile, outputFormat internal.Format) (any, string, error) {
 	switch outputFormat {
+	case internal.FormatAYCD:
+		return aycd.Convert(profiles)
 	case internal.FormatStellar:
 		return stellar.Convert(profiles)
 	case internal.FormatShikari:

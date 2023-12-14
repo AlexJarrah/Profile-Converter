@@ -1,8 +1,9 @@
 package internal
 
-// Update internal/cli/prompt.go & cmd/Profile-Converter/main.go
+// Update internal/cli/prompt.go, cmd/Profile-Converter/main.go, & README.md
 const (
-	FormatStellar Format = iota
+	FormatAYCD Format = iota
+	FormatStellar
 	FormatShikari
 	FormatTrickle
 )

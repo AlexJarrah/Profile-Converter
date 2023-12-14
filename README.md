@@ -20,6 +20,7 @@ go run cmd/Profile-Converter/main.go
 
 ## Supported Bots
 
+- [AYCD](https://aycd.io/)
 - [Stellar](https://stellaraio.com/)
 - [Shikari](https://shikari.tech/)
 - [Trickle](https://trickle.bot)
